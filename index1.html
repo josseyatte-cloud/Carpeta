@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi persona favorita</title>
+    <style>
+        :root {
+            --color-principal: #ff4d6d;
+            --color-secundario: #ff85a1;
+            --fondo: #fff0f3;
+            --blanco-transparente: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--fondo);
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            overflow: hidden;
+            color: #4a4a4a;
+        }
+
+        /* Corazones de fondo */
+        .corazon-bg {
+            position: absolute;
+            color: var(--color-secundario);
+            opacity: 0.3;
+            animation: flotar 10s linear infinite;
+            z-index: 0;
+            user-select: none;
+        }
+
+        @keyframes flotar {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Tarjeta Principal */
+        .tarjeta {
+            background: var(--blanco-transparente);
+            backdrop-filter: blur(12px);
+            padding: 50px 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.15);
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            border: 2px solid white;
+            z-index: 10;
+            animation: entrada 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes entrada {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1 { color: var(--color-principal); font-size: 2.2rem; margin-bottom: 15px; }
+        
+        .mensaje { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; }
+        .mensaje span { display: block; margin-top: 10px; font-weight: 700; color: var(--color-principal); }
+
+        .corazon-central {
+            font-size: 60px;
+            color: var(--color-principal);
+            animation: latido 1.2s infinite;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .boton {
+            background: var(--color-principal);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+        }
+
+        .boton:hover { transform: scale(1.05); background: #ff0a54; }
+
+        /* --- MODAL BONITO --- */
+        #modal-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.4s;
+            backdrop-filter: blur(4px);
+        }
+
+        #modal-container.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-contenido {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 300px;
+            position: relative;
+            transform: scale(0.7);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        #modal-container.active .modal-contenido { transform: scale(1); }
+
+        .modal-contenido h2 { color: var(--color-principal); margin-top: 0; }
+        .modal-contenido p { font-size: 1.1rem; margin-bottom: 25px; }
+
+        .boton-cerrar {
+            background: #f0f0f0;
+            color: #555;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .boton-cerrar:hover { background: #e0e0e0; }
+
+    </style>
+</head>
+<body>
+
+    <script>
+        // Corazones de fondo
+        for (let i = 0; i < 25; i++) {
+            const corazon = document.createElement('div');
+            corazon.className = 'corazon-bg';
+            corazon.innerHTML = '❤';
+            corazon.style.left = Math.random() * 100 + 'vw';
+            corazon.style.top = Math.random() * 100 + 'vh';
+            corazon.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            corazon.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(corazon);
+        }
+
+        function abrirModal() {
+            document.getElementById('modal-container').classList.add('active');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-container').classList.remove('active');
+        }
+    </script>
+
+    <div class="tarjeta">
+        <div class="corazon-central">❤</div>
+        <h1>Hola, mi amor</h1>
+        <div class="mensaje">
+            Solo quería recordarte que <strong>te amo infinitamente</strong>. 
+            Eres mi lugar favorito en el mundo y...
+            <span>¡me encanta verte sonreír!</span>
+        </div>
+        <button class="boton" onclick="abrirModal()">Tengo un secreto...</button>
+    </div>
+
+    <div id="modal-container" onclick="cerrarModal()">
+        <div class="modal-contenido" onclick="event.stopPropagation()">
+            <h2>✨ Promesa ✨</h2>
+            <p>¡Nunca dejes de sonreír! Tu felicidad es lo más lindo de mi vida. ❤️</p>
+            <button class="boton-cerrar" onclick="cerrarModal()">Lo prometo</button>
+        </div>
+    </div>
+
+</body>
+</html>
